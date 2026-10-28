@@ -1,0 +1,29 @@
+{
+  "name": "Aura",
+  "identifier": "com.leboxis.aura.source",
+  "subtitle": "Ambiances et concentration",
+  "description": "Aura, l'app d'ambiances et de concentration pour iPhone : quatre onglets, lecteur liquid glass et minuteur.",
+  "iconURL": "https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/icons/com.leboxis.aura.png",
+  "website": "https://github.com/Leboxis/aura-ios",
+  "tintColor": "#8B9CFF",
+  "featuredApps": [
+    "com.leboxis.aura"
+  ],
+  "apps": [
+    {
+      "name": "Aura",
+      "bundleIdentifier": "com.leboxis.aura",
+      "developerName": "Leboxis",
+      "subtitle": "Ambiances, minuteur et lecteur",
+      "localizedDescription": "Aura réunit huit ambiances sonores, un minuteur de concentration et un lecteur en liquid glass. Quatre onglets : Aujourd'hui, Espaces, Bibliothèque, Vous.",
+      "iconURL": "https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/icons/com.leboxis.aura.png",
+      "tintColor": "#8B9CFF",
+      "category": "utilities",
+      "version": "1.0",
+      "versionDate": "2026-10-28",
+      "size": 2226538,
+      "downloadURL": "https://github.com/Leboxis/aura-ios/releases/download/com.leboxis.aura/Aura-1.0.0.ipa",
+      "screenshotURLs": []
+    }
+  ]
+}

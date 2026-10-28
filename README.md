@@ -115,7 +115,8 @@ Le dépôt ne contient aucun certificat Apple : l'artifact est **non signé**, i
 Le dossier [`livecontainer/`](livecontainer/README.md) publie un dépôt JSON pour LiveContainer : l'IPA s'importe directement, et les gestionnaires compatibles LC-DL peuvent lire `repo.json`.
 
 - Release : https://github.com/Leboxis/aura-ios/releases/tag/com.leboxis.aura
-- Dépôt : `https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/repo.json`
+- Source LBox : `https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/source.json`
+- Dépôt LC-DL : `https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/repo.json`
 
 ### Réglages iOS
 
