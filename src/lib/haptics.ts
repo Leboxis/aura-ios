@@ -1,41 +1,16 @@
 import { Capacitor } from '@capacitor/core'
+import { Haptics, ImpactStyle } from '@capacitor/haptics'
 
-type ImpactStyle = 'light' | 'medium' | 'heavy'
+export async function haptic(enabled: boolean, style: 'light' | 'medium' = 'light') {
+  if (!enabled) return
 
-let enabled = true
-
-export function setHapticsEnabled(value: boolean) {
-  enabled = value
-}
-
-async function nativeHaptics() {
-  if (!enabled || !Capacitor.isNativePlatform()) return null
   try {
-    return await import('@capacitor/haptics')
+    if (Capacitor.isNativePlatform()) {
+      await Haptics.impact({ style: style === 'medium' ? ImpactStyle.Medium : ImpactStyle.Light })
+      return
+    }
+    navigator.vibrate?.(style === 'medium' ? 14 : 7)
   } catch {
-    return null
+    // Haptics are best-effort: unsupported devices and browser policies are ignored.
   }
-}
-
-/** A short, physical confirmation that a control was touched. */
-export async function hapticTap(style: ImpactStyle = 'light') {
-  const mod = await nativeHaptics()
-  if (!mod) return
-  const styles = {
-    light: mod.ImpactStyle.Light,
-    medium: mod.ImpactStyle.Medium,
-    heavy: mod.ImpactStyle.Heavy,
-  }
-  await mod.Haptics.impact({ style: styles[style] }).catch(() => undefined)
-}
-
-/** Reserved for meaningful moments: session start, completion. */
-export async function hapticNotice(type: 'success' | 'warning') {
-  const mod = await nativeHaptics()
-  if (!mod) return
-  const map = {
-    success: mod.NotificationType.Success,
-    warning: mod.NotificationType.Warning,
-  }
-  await mod.Haptics.notification({ type: map[type] }).catch(() => undefined)
 }

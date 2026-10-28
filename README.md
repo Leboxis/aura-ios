@@ -1,34 +1,34 @@
 # Aura
 
-Une app iPhone d'ambiances sonores et de concentration, en **liquid glass**, avec une barre de navigation flottante arrondie et translucide, quatre onglets et des transitions physiques dignes d'iOS.
+Une app iPhone d'ambiances et de concentration, reconstruite de zéro avec **shadcn/ui**, **Aceternity UI**, **Motion**, **Lucide** et **Tailwind CSS**. Direction graphite et lime, tab bar en verre et lecteur plein écran.
 
-| Aujourd'hui | Espaces |
+| Aujourd'hui | Explorer |
 | --- | --- |
-| ![Aujourd'hui](screenshots/01-today.png) | ![Espaces](screenshots/02-espaces.png) |
+| ![Aujourd'hui](screenshots/01-home.png) | ![Explorer](screenshots/02-explore.png) |
 
 | Bibliothèque | Vous |
 | --- | --- |
-| ![Bibliothèque](screenshots/03-bibliotheque.png) | ![Vous](screenshots/04-vous.png) |
+| ![Bibliothèque](screenshots/03-library.png) | ![Vous](screenshots/04-you.png) |
 
-| Lecteur |
-| --- |
-| ![Lecteur](screenshots/05-lecteur.png) |
+| Lecteur | Grand écran |
+| --- | --- |
+| ![Lecteur](screenshots/05-player.png) | ![Bureau](screenshots/06-desktop.png) |
 
-> Captures prises dans Chromium au viewport 390 × 844. Sur iPhone, la typographie est SF Pro (police système) et les matériaux sont rendus par le WebView.
+> Captures prises dans Chromium à 390 × 844 (et 1280 × 960 pour la dernière). Sur iPhone, la typographie est SF Pro et les matériaux sont rendus par le WebView.
 
 ## L'app
 
-Aura est un lecteur d'ambiances pour ralentir : une séance du soir, des lieux à écouter, une bibliothèque de favoris et un profil avec objectif d'écoute. L'interface est pensée comme une app iOS native :
+Dix ambiances, un minuteur, des favoris et un objectif d'écoute. L'interface est pensée comme une app iOS native :
 
-- **Quatre onglets** — Aujourd'hui, Espaces, Bibliothèque, Vous.
-- **Tab bar flottante** — capsule arrondie en verre dépoli, pastille de sélection animée par ressort partagé (`layoutId`), halo spéculaire sur l'arête supérieure.
-- **Liquid glass partout** — trois épaisseurs de matériau (`.glass`, `.glass-strong`, `.glass-soft`), bord lumineux, ombres internes, grain et flou d'arrière-plan.
-- **Lecteur plein écran** — feuille glissable à la main, fermeture à la vélocité, progression scrubbable, favoris, ambiance précédente/suivante, aléatoire, partage natif.
-- **Mini-lecteur** — au-dessus de la tab bar, avec progression et lecture/pause, comme dans Musique.
-- **Recherche et filtres** — par ambiance, lieu ou humeur, avec état vide soigné.
-- **Favoris persistants** — stockés localement sur l'appareil.
-- **Haptiques** — via Capacitor Haptics sur iPhone (aucun bruit sur le web).
-- **Responsive** — colonne unique sur iPhone, grilles 3/4 colonnes sur iPad et grand écran.
+- **Quatre onglets** — Aujourd'hui, Explorer, Bibliothèque, Vous.
+- **Tab bar flottante** — capsule en verre de 28 px de rayon, pastille de sélection animée par `layoutId`, retour haptique.
+- **Hero spotlight** — carte qui suit le pointeur, halo lime, titre révélé mot à mot, anneau de séance et bordure lumineuse rotative sur l'action principale.
+- **Pochettes génératives** — gradients, lignes diagonales, anneaux et grain, avec un glyphe Lucide par ambiance ; aucune image externe.
+- **Lecteur** — feuille `Sheet` plein écran, faisceaux animés, progression scrubbable, favoris, précédent/suivant, file d'attente.
+- **Mini-lecteur** — au-dessus de la tab bar, progression fine et lecture/pause.
+- **Recherche et filtres** — champ arrondi, onglets d'humeur Radix, état vide et réinitialisation.
+- **Favoris et réglages persistants** — localStorage ; haptiques Capacitor sur iPhone.
+- **Responsive** — une colonne sur iPhone, grilles 3/4 colonnes et hero horizontal sur iPad et grand écran.
 
 ## Stack
 
@@ -36,12 +36,15 @@ Aura est un lecteur d'ambiances pour ralentir : une séance du soir, des lieux �
 | --- | --- |
 | UI | React 19 + TypeScript |
 | Build | Vite 8 |
-| Style | Tailwind CSS 4, primitives façon shadcn/ui (`cva`, `cn`, composants composables) |
-| Motion | Motion (ex-Framer Motion), ressorts, `layoutId`, drag avec vélocité |
-| Icônes | Lucide |
-| Effets | Spotlight, Background Beams et Card Spotlight réécrits dans l'esprit d'Aceternity UI |
+| Design system | **shadcn/ui** (Radix) : `button`, `card`, `tabs`, `input`, `slider`, `switch`, `badge`, `avatar`, `progress`, `separator`, `sheet` |
+| Effets | **Aceternity UI** : Spotlight, Background Beams, Meteors, Card Spotlight, Text Generate, Hover Border Gradient |
+| Motion | **Motion** — ressorts, `layoutId`, révélations, respect de `prefers-reduced-motion` |
+| Icônes | **Lucide** |
+| Style | **Tailwind CSS 4** — tokens OKLCH/hex, utilitaires `glass`, `glass-strong`, `glass-soft`, `grain` |
 | iOS | Capacitor 8, projet Xcode en Swift Package Manager |
 | CI | GitHub Actions sur macOS, IPA non signé en artifact |
+
+Les composants shadcn sont versionnés dans [`src/components/ui`](src/components/ui) (`components.json` à la racine) : ils appartiennent au projet et se modifient directement.
 
 ## Démarrage
 
@@ -57,32 +60,26 @@ npm run build
 npm run preview
 ```
 
-Vérification du code :
-
-```bash
-npm run lint
-```
+Vérification : `npm run lint` (0 erreur) et `npx tsc -b`.
 
 ## Structure
 
 ```
 src/
-  App.tsx                     coquille, aurora, onglets, lecteur
+  App.tsx                     coquille, fond ambiant, dock, feuille de lecture
   components/
-    aceternity/               spotlight, background beams
-    tabs/                     les quatre écrans
-    ui/                       matériaux et contrôles (button, toggle, segmented, slider…)
-    FocusRing.tsx             anneau de minuterie
-    TabBar.tsx                capsule liquid glass flottante
-    NowPlaying.tsx            feuille de lecture glissable
-    MiniPlayer.tsx            mini-lecteur au-dessus de la tab bar
-    SpaceArt.tsx              pochettes générées par gradients
+    aceternity/               spotlight, beams, meteors, card spotlight, text generate, border gradient
+    app/                      SpaceArt, SpaceCard, TabBar, MiniPlayer, PlayerSheet, Screen
+    ui/                       primitives shadcn (button, sheet, tabs, slider, switch…)
+  screens/                    HomeScreen, ExploreScreen, LibraryScreen, ProfileScreen
   lib/
-    data.ts                   ambiances, mixes, profil, données de démo
-    usePlayer.ts              timer, progression, seek, favoris
+    data.ts                   ambiances, humeurs, statistiques
+    player.tsx                contexte lecteur : file, temps, favoris, réglages
     haptics.ts                pont Capacitor Haptics
+    tabs.ts                   identifiants d'onglets
     utils.ts                  cn(), formats de temps
 ios/                          projet Xcode Capacitor (SPM)
+livecontainer/                dépôt JSON + IPA pour LiveContainer
 .github/workflows/ios.yml     build macOS → IPA
 ```
 
@@ -112,7 +109,7 @@ Le dépôt ne contient aucun certificat Apple : l'artifact est **non signé**, i
 
 ### Installer via LiveContainer
 
-Le dossier [`livecontainer/`](livecontainer/README.md) publie un dépôt JSON pour LiveContainer : l'IPA s'importe directement, et les gestionnaires compatibles LC-DL peuvent lire `repo.json`.
+Le dossier [`livecontainer/`](livecontainer/README.md) publie l'IPA et deux formats de dépôt : `source.json` pour LBox et `repo.json` pour LC-DL.
 
 - Release : https://github.com/Leboxis/aura-ios/releases/tag/com.leboxis.aura
 - Source LBox : `https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/source.json`
@@ -127,20 +124,20 @@ Le dossier [`livecontainer/`](livecontainer/README.md) publie un dépôt JSON po
 
 ## Design & accessibilité
 
-- **Typographie** : SF Pro (système), tracking négatif sur les grands titres, leading serré, `tabular-nums` sur le temps.
-- **Ressorts** : aucun rebond sur les surfaces qui apparaissent, rebond léger réservé aux gestes qui portent de la vélocité.
-- **Feedback** : press sur `pointer-down` (`.press:active`), haptique sur les bascules et changements d'onglet.
-- **Mouvement réduit** : `prefers-reduced-motion` supprime les translations et les animations en boucle, garde les fondus.
-- **Transparence réduite / contraste élevé** : les matériaux deviennent opaques et lisibles.
-- **Cibles tactiles** ≥ 44 px, focus visible, rôles ARIA (`tablist`, `switch`, `dialog`, `timer`), fermeture du lecteur au clavier.
+- **Palette** : graphite `#07080a`, texte `#f1f2f4`, accent lime `#d8ff63` réservé aux actions et aux chiffres clés.
+- **Matériaux** : trois épaisseurs de verre, arête lumineuse, grain, ombres internes ; replis opaques en `prefers-reduced-transparency`.
+- **Typographie** : SF Pro sur iPhone, titres à tracking négatif, monospace et `tabular-nums` pour les temps.
+- **Mouvement** : ressorts sans rebond superflu, `prefers-reduced-motion` coupe translations et boucles.
+- **Feedback** : press sur `active:scale`, haptique sur les onglets, favoris, lecture et réglages.
+- **Accessibilité** : cibles ≥ 44 px, focus visible, rôles Radix (`tablist`, `switch`, `dialog`, `slider`), libellés sur tous les boutons-icônes.
 
 ## Limites connues
 
-- **Pas encore d'audio** : les ambiances sont des pochettes générées et le lecteur gère le temps, la pause et la progression, mais ne synthétise pas de son. C'est le prochain chantier naturel (Web Audio ou fichiers loopés).
-- Les données (favoris, historique, profil) sont de démonstration, à l'exception des favoris persistés localement.
+- **Pas encore d'audio** : les ambiances sont des visuels ; le lecteur gère temps, pause, progression et enchaînement, mais ne synthétise pas de son. Prochain chantier : Web Audio ou boucles.
+- Les statistiques et le profil sont des données de démonstration ; favoris et réglages sont réels et persistés localement.
 - L'IPA produit par la CI est non signé, par construction.
-- Les captures sont faites sous Chromium ; le rendu final sur iPhone utilise SF Pro et les safe areas réelles.
+- Les captures sont faites sous Chromium ; sur iPhone, SF Pro et les safe areas réelles prennent le relais.
 
 ## Crédits
 
-Design inspiré des Human Interface Guidelines d'Apple et de la direction « liquid glass » d'iOS 26. Composants d'effets inspirés d'[Aceternity UI](https://ui.aceternity.com), primitives dans l'esprit de [shadcn/ui](https://ui.shadcn.com), icônes [Lucide](https://lucide.dev), animations [Motion](https://motion.dev). Projet de démonstration, sans affiliation avec Apple.
+Composants d'effets inspirés d'[Aceternity UI](https://ui.aceternity.com), primitives [shadcn/ui](https://ui.shadcn.com), icônes [Lucide](https://lucide.dev), animations [Motion](https://motion.dev), styles [Tailwind CSS](https://tailwindcss.com). Projet de démonstration, sans affiliation avec Apple.

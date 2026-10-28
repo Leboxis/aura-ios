@@ -1,62 +1,27 @@
-import { useRef, type PointerEvent, type ReactNode } from 'react'
-import { cn } from '../../lib/utils'
+import { motion, useReducedMotion } from 'motion/react'
 
-type SpotlightProps = {
-  children: ReactNode
-  className?: string
-  size?: number
-  color?: string
-}
+import { cn } from '@/lib/utils'
 
-/**
- * Aceternity-inspired pointer spotlight. Writes pointer position straight to
- * CSS custom properties so following the cursor never triggers a re-render.
- */
 export function Spotlight({
-  children,
   className,
-  size = 440,
-  color = 'rgba(139, 123, 255, 0.22)',
-}: SpotlightProps) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleMove = (event: PointerEvent<HTMLDivElement>) => {
-    const element = ref.current
-    if (!element) return
-    const rect = element.getBoundingClientRect()
-    element.style.setProperty('--spot-x', `${event.clientX - rect.left}px`)
-    element.style.setProperty('--spot-y', `${event.clientY - rect.top}px`)
-  }
-
-  return (
-    <div ref={ref} onPointerMove={handleMove} className={cn('group relative', className)}>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
-        style={{
-          background: `radial-gradient(${size}px circle at var(--spot-x, 50%) var(--spot-y, 0%), ${color}, transparent 72%)`,
-        }}
-      />
-      {children}
-    </div>
-  )
-}
-
-type CardSpotlightProps = {
-  children: ReactNode
+  color = 'rgba(216,255,99,0.32)',
+}: {
   className?: string
-  radius?: number
-}
+  color?: string
+}) {
+  const reduce = useReducedMotion()
 
-/** A tighter, whiter spotlight used on artwork cards. */
-export function CardSpotlight({ children, className, radius = 260 }: CardSpotlightProps) {
   return (
-    <Spotlight
-      size={radius}
-      color="rgba(255, 255, 255, 0.18)"
-      className={className}
-    >
-      {children}
-    </Spotlight>
+    <motion.div
+      aria-hidden
+      initial={reduce ? false : { opacity: 0, scale: 0.86 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+      className={cn(
+        'pointer-events-none absolute -top-48 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full blur-[110px]',
+        className,
+      )}
+      style={{ background: `radial-gradient(circle at 50% 50%, ${color}, transparent 68%)` }}
+    />
   )
 }
