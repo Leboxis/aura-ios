@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local build output and downloaded artifacts
+/build/
+/artifacts/
