@@ -49,7 +49,7 @@ Le fichier LC-DL `appURL` pointe vers `app.zip`, dont la racine contient le bund
 - Bundle : `com.leboxis.aura`
 - Version : `1.0` (build `1`)
 - Minimum : iOS 15.0, arm64
-- `app.zip` : 2,1 Mo, 36 entrées · IPA : 2,2 Mo
+- `app.zip` : 2,1 Mo, 35 entrées · IPA : 2,2 Mo
 
 ## Mettre à jour l'app
 
