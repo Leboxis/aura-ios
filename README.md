@@ -110,6 +110,13 @@ Le dépôt ne contient aucun certificat Apple : l'artifact est **non signé**, i
 - **Sideloadly** ou **AltStore** re-signent l'IPA avec un identifiant Apple gratuit (validité 7 jours, à re-signer ensuite) ou un compte développeur payant (1 an) ;
 - pour une distribution TestFlight/App Store, il faut ajouter un certificat de distribution, un profil de provisioning et une étape `xcodebuild -exportArchive` avec `ExportOptions.plist` dans le workflow.
 
+### Installer via LiveContainer
+
+Le dossier [`livecontainer/`](livecontainer/README.md) publie un dépôt JSON pour LiveContainer : l'IPA s'importe directement, et les gestionnaires compatibles LC-DL peuvent lire `repo.json`.
+
+- Release : https://github.com/Leboxis/aura-ios/releases/tag/com.leboxis.aura
+- Dépôt : `https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/repo.json`
+
 ### Réglages iOS
 
 - Bundle : `com.leboxis.aura`

@@ -1,0 +1,11 @@
+{
+  "type": "app",
+  "name": "Aura",
+  "desc": "Ambiances sonores, minuteur de concentration et lecteur liquid glass pour iPhone.",
+  "icon": "https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/icons/com.leboxis.aura.png",
+  "appURL": "https://github.com/Leboxis/aura-ios/releases/download/com.leboxis.aura/app.zip",
+  "tweaks": false,
+  "data": false,
+  "version": "1.0",
+  "size": "2.1 MB"
+}

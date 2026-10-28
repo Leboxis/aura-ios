@@ -1,0 +1,7 @@
+{
+  "type": "repo",
+  "name": "Aura",
+  "msg": "Aura, l'app d'ambiances et de concentration pour iPhone, prête pour LiveContainer.",
+  "icon": "https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/icon.png",
+  "url": "https://raw.githubusercontent.com/Leboxis/aura-ios/refs/heads/main/livecontainer/"
+}
