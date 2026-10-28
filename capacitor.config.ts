@@ -6,8 +6,9 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   ios: {
     contentInset: 'never',
-    scrollEnabled: false,
-    backgroundColor: '#050508',
+    // Doit rester true : false désactive UIScrollView.isScrollEnabled et fige la page.
+    scrollEnabled: true,
+    backgroundColor: '#07080a',
   },
   plugins: {
     StatusBar: {

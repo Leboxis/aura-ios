@@ -39,7 +39,9 @@ function Shell() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
         >
-          {tab === 'home' ? <HomeScreen onNavigate={setTab} /> : null}
+          {tab === 'home' ? (
+            <HomeScreen onNavigate={setTab} onOpenPlayer={() => setPlayerOpen(true)} />
+          ) : null}
           {tab === 'explore' ? <ExploreScreen /> : null}
           {tab === 'library' ? <LibraryScreen onNavigate={setTab} /> : null}
           {tab === 'you' ? <ProfileScreen /> : null}

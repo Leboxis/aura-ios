@@ -25,7 +25,13 @@ import { cn } from '@/lib/utils'
 
 const PICKS = [SPACES[0], SPACES[4], SPACES[2], SPACES[9]]
 
-export function HomeScreen({ onNavigate }: { onNavigate: (tab: TabId) => void }) {
+export function HomeScreen({
+  onNavigate,
+  onOpenPlayer,
+}: {
+  onNavigate: (tab: TabId) => void
+  onOpenPlayer: () => void
+}) {
   const { play } = usePlayer()
   const featured = SPACES[1]
 
@@ -77,7 +83,12 @@ export function HomeScreen({ onNavigate }: { onNavigate: (tab: TabId) => void })
               {featured.title} · {featured.minutes} min. Un drone froid pour couper la journée net.
             </p>
             <div className="mt-6 flex items-center gap-2.5">
-              <HoverBorderGradient onClick={() => play(featured)}>
+              <HoverBorderGradient
+                onClick={() => {
+                  play(featured)
+                  onOpenPlayer()
+                }}
+              >
                 <Play className="size-4 fill-primary text-primary" />
                 Démarrer {featured.minutes} min
               </HoverBorderGradient>
@@ -85,7 +96,10 @@ export function HomeScreen({ onNavigate }: { onNavigate: (tab: TabId) => void })
                 variant="glass"
                 size="icon"
                 aria-label="Lancer une ambiance au hasard"
-                onClick={() => play(SPACES[Math.floor(Math.random() * SPACES.length)])}
+                onClick={() => {
+                  play(SPACES[Math.floor(Math.random() * SPACES.length)])
+                  onOpenPlayer()
+                }}
               >
                 <Shuffle className="size-4" />
               </Button>
