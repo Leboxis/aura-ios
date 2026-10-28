@@ -46,7 +46,7 @@ jobs:
         run: |
           xcodebuild \
             -project ios/App/App.xcodeproj \
-            -target App \
+            -scheme App \
             -configuration Release \
             -sdk iphoneos \
             -derivedDataPath build/DerivedData \
